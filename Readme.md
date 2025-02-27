@@ -18,7 +18,7 @@ A modern Neovim configuration focused on productivity with excellent treesitter 
 1. Clone this repository to your Neovim configuration directory:
 
 ```bash
-git clone https://github.com/yourusername/nvim.git ~/.config/nvim
+git clone git@github.com:sandudorogan/nvim-config.git ~/.config/nvim
 ```
 
 2. Install dependencies as instructed in the [init.lua](./lua/sandu/core/init.lua) file.
