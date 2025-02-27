@@ -18,10 +18,9 @@ A modern Neovim configuration focused on productivity with excellent treesitter 
 <div align="center">
   <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
     <img src="./images/SCR-20250228-cbxt.png" width="49%" alt="Screenshot 4" />
-    <img src="./images/SCR-20250228-cbul.png" width="49%" alt="Screenshot 3" />
+    <img src="./images/SCR-20250228-cdey.png" width="49%" alt="Screenshot 3" />
     <img src="./images/SCR-20250228-caxp.png" width="49%" alt="Screenshot 1" />
     <img src="./images/SCR-20250228-cbkf.png" width="49%" alt="Screenshot 2" />
-    <img src="./images/SCR-20250228-cdey.png" width="49%" alt="Screenshot 4" />
   </div>
 </div>
 
