@@ -51,46 +51,13 @@ git clone git@github.com:sandudorogan/nvim-config.git ~/.config/nvim
 - **LSP**: Complete Language Server Protocol support
 - **Treesitter**: Advanced syntax highlighting and text objects
 - **Telescope**: Fuzzy finder for files, buffers, and more
+- **Copilot**: AI-powered code completion
+- **Conform.nvim**: Formatting with support for multiple languages
 - **Mini.nvim**: Collection of independent Lua modules:
   - Operators: Enhanced text operations
   - Pairs: Auto-pairing of brackets
   - Surround: Quick manipulation of surrounding characters
   - AI: Extended text objects
-- **Conform.nvim**: Formatting with support for multiple languages
-- **Copilot**: AI-powered code completion
-
-## Text Objects
-
-This configuration includes enhanced text objects for:
-
-- Assignments (=)
-- Object properties (:)
-- Parameters/arguments
-- Conditionals
-- Loops
-- Function calls
-- Method/function definitions
-- Classes
-
-## Key Mappings
-
-- `<leader>mp`: Format file or selected range
-- `]m/[m`: Navigate to next/previous function
-- `]c/[c`: Navigate to next/previous class
-- `;/,`: Repeat/reverse last Treesitter movement
-- Many more discoverable via WhichKey (`<leader>`)
-
-## Language Support
-
-Preconfigured formatting for:
-
-- JavaScript/TypeScript
-- React
-- HTML/CSS
-- Lua
-- Python
-- Clojure
-- And more
 
 ## Customization
 
