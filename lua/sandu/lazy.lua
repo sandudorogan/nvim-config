@@ -15,6 +15,7 @@ require("lazy").setup({
   { import = "sandu.plugins" },
   { import = "sandu.plugins.lsp" },
   { import = "sandu.plugins.mini" },
+  { import = "sandu.plugins.ai" },
 }, {
   checker = {
     enabled = true,

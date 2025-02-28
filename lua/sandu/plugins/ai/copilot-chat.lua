@@ -31,11 +31,14 @@ return {
     "CopilotC-Nvim/CopilotChat.nvim",
     -- version = "v3.3.0", -- Use a specific version to prevent breaking changes
     dependencies = {
-      { "github/copilot.vim" }, -- Use Copilot.vim for the chat
+      { "zbirenbaum/copilot.lua" }, -- Use Copilot.vim for the chat
       { "nvim-telescope/telescope.nvim" }, -- Use telescope for help actions
       { "nvim-lua/plenary.nvim" },
     },
+    build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
+      debug = false, -- Enable debugging
+      model = "claude-3.7-sonnet",
       question_header = "## User ",
       answer_header = "## Copilot ",
       error_header = "## Error ",
@@ -193,7 +196,7 @@ return {
       -- Copilot Chat Models
       { "<leader>a?", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat - Select Models" },
       -- Copilot Chat Agents
-      { "<leader>aa", "<cmd>CopilotChatAgents<cr>", desc = "CopilotChat - Select Agents" },
+      -- { "<leader>aa", "<cmd>CopilotChatAgents<cr>", desc = "CopilotChat - Select Agents" },
     },
   },
 }
