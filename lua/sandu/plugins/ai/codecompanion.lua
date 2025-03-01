@@ -13,17 +13,6 @@ return {
         adapter = "copilot",
       },
     },
-    adapters = {
-      copilot = function()
-        return require("codecompanion.adapters").extend("copilot", {
-          schema = {
-            model = {
-              default = "claude-3.7-sonnet",
-            },
-          },
-        })
-      end,
-    },
     ui = {
       popup = {
         border = "rounded",
@@ -44,6 +33,17 @@ return {
   },
   config = function()
     require("codecompanion").setup({
+      adapters = {
+        copilot = function()
+          return require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = {
+                default = "claude-3.7-sonnet",
+              },
+            },
+          })
+        end,
+      },
       strategies = {
         chat = {
           slash_commands = {
@@ -72,7 +72,16 @@ return {
                 if handle ~= nil then
                   local result = handle:read("*a")
                   handle:close()
-                  chat:add_reference({ content = result }, "git_status", "<git_status>")
+
+                  if result and result ~= "" then
+                    chat:add_reference({ content = result }, "git_status", "<git_status>")
+                  else
+                    return vim.notify(
+                      "No changes detected in git diff",
+                      vim.log.levels.INFO,
+                      { title = "CodeCompanion" }
+                    )
+                  end
                 else
                   return vim.notify("No git status available", vim.log.levels.INFO, { title = "CodeCompanion" })
                 end
@@ -82,21 +91,27 @@ return {
               },
             },
             ["git_diff"] = {
-              description = "See changes you've made",
+              description = "Staged changes",
               ---@param chat CodeCompanion.Chat
               callback = function(chat)
-                local handle = io.popen("git diff")
+                local handle = io.popen("git diff --staged")
                 if handle ~= nil then
                   local result = handle:read("*a")
                   handle:close()
-                  chat:add_reference({ content = result }, "git_diff", "<git_diff>")
+
+                  if result and result ~= "" then
+                    chat:add_reference({ content = result }, "git_diff", "<git_diff>")
+                  else
+                    return vim.notify(
+                      "No changes detected in git diff",
+                      vim.log.levels.INFO,
+                      { title = "CodeCompanion" }
+                    )
+                  end
                 else
-                  return vim.notify("No changes detected", vim.log.levels.INFO, { title = "CodeCompanion" })
+                  return vim.notify("Failed to run git diff command", vim.log.levels.INFO, { title = "CodeCompanion" })
                 end
               end,
-              opts = {
-                contains_code = true,
-              },
             },
           },
         },
