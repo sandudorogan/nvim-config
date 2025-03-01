@@ -26,7 +26,7 @@ return {
     require("sandu.plugins.ai.codecompanion.lualine"):init()
   end,
   keys = {
-    { "<leader>aa", ":CodeCompanionActions<CR>", desc = "Companion - 🎯 Open Action Palette" },
+    { "<leader>ab", ":CodeCompanionActions<CR>", desc = "Companion - 🎯 Open Action Palette" },
     { "<leader>ac", ":CodeCompanionChat<CR>", desc = "Companion - 💬 Open AI chat" },
     { "<leader>ax", ":CodeCompanionContext<CR>", desc = "Companion - 📄 Add file context" },
     { "<leader>as", ":CodeCompanionSelection<CR>", mode = "v", desc = "Companion - ✂️ Use selection as context" },
@@ -38,7 +38,7 @@ return {
           return require("codecompanion.adapters").extend("copilot", {
             schema = {
               model = {
-                default = "claude-3.7-sonnet",
+                default = "claude-3.7-sonnet-thought",
               },
             },
           })

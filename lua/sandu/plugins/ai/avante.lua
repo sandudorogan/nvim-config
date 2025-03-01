@@ -2,13 +2,25 @@ return {
   "yetone/avante.nvim",
   event = "VeryLazy",
   version = false, -- set this if you want to always pull the latest change
-  enabled = false, -- set this if you want to always pull the latest change
+  enabled = true,
   opts = {
     -- add any opts here
     provider = "copilot",
     copilot = {
       model = "claude-3.7-sonnet",
     },
+  },
+  dual_boost = {
+    enabled = true,
+    provider = "copilot",
+    copilot = {
+      model = "claude-3.7-sonnet-thought",
+    },
+  },
+  beheviour = {
+    auto_suggestions = true,
+    auto_apply_diff_after_generation = true,
+    enable_cursor_planning_mode = true, -- Whether to enable Cursor Planning Mode. Default to false.
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = "make",
@@ -36,6 +48,14 @@ return {
           use_absolute_path = true,
         },
       },
+    },
+    {
+      -- Make sure to set this up properly if you have lazy=true
+      "MeanderingProgrammer/render-markdown.nvim",
+      opts = {
+        file_types = { "markdown", "Avante" },
+      },
+      ft = { "markdown", "Avante" },
     },
   },
 }
