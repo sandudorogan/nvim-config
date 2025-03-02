@@ -26,7 +26,7 @@ return {
     require("sandu.plugins.ai.codecompanion.lualine"):init()
 
     require("which-key").add({
-      { "<leader>am", group = "CodeCompanion" },
+      { "<leader>am", group = "🤖CodeCompanion" },
       { "<leader>amb", ":CodeCompanionActions<CR>", desc = "Companion - 🎯 Open Action Palette" },
       { "<leader>amc", ":CodeCompanionChat<CR>", desc = "Companion - 💬 Open AI chat" },
       { "<leader>amx", ":CodeCompanionContext<CR>", desc = "Companion - 📄 Add file context" },

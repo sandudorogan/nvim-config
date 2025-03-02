@@ -5,7 +5,7 @@ return {
   enabled = true,
   opts = {
     -- add any opts here
-    provider = "claude",
+    provider = "copilot",
     auto_suggestions_provider = "openai",
     copilot = {
       model = "claude-3.7-sonnet",
@@ -25,17 +25,27 @@ return {
     first_provider = "copilot",
     second_provider = "claude",
     copilot = {
-      model = "claude-3.7-sonnet",
+      model = "claude-3.7-sonnet-thought",
     },
     claude = {
       model = "claude-3.7-sonnet-20250219",
     },
   },
-  beheviour = {
+  behaviour = {
     auto_suggestions = true,
     auto_suggestions_respect_ignore = true,
     auto_apply_diff_after_generation = true,
     enable_cursor_planning_mode = true, -- Whether to enable Cursor Planning Mode. Default to false.
+  },
+  vendors = {
+    --- ... existing vendors
+    groq = { -- define groq provider
+      __inherited_from = "openai",
+      api_key_name = "GROQ_API_KEY",
+      endpoint = "https://api.groq.com/openai/v1/",
+      model = "llama-3.3-70b-versatile",
+      max_tokens = 100000, -- remember to increase this value, otherwise it will stop generating halfway
+    },
   },
   suggestion = {
     debounce = 50,
