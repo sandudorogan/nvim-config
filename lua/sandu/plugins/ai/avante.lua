@@ -5,25 +5,52 @@ return {
   enabled = true,
   opts = {
     -- add any opts here
-    provider = "copilot",
+    provider = "claude",
+    auto_suggestions_provider = "openai",
     copilot = {
       model = "claude-3.7-sonnet",
+    },
+    claude = {
+      model = "claude-3-7-sonnet-20250219",
+    },
+    openai = {
+      model = "gpt-4o",
+    },
+    rag_service = {
+      enabled = true, -- Enables the rag service, requires OPENAI_API_KEY to be set
     },
   },
   dual_boost = {
     enabled = true,
-    provider = "copilot",
+    first_provider = "copilot",
+    second_provider = "claude",
     copilot = {
-      model = "claude-3.7-sonnet-thought",
+      model = "claude-3.7-sonnet",
+    },
+    claude = {
+      model = "claude-3.7-sonnet-20250219",
     },
   },
   beheviour = {
     auto_suggestions = true,
+    auto_suggestions_respect_ignore = true,
     auto_apply_diff_after_generation = true,
     enable_cursor_planning_mode = true, -- Whether to enable Cursor Planning Mode. Default to false.
   },
+  suggestion = {
+    debounce = 50,
+    throttle = 50,
+  },
+  mappings = {
+    suggestion = {
+      accept = "<Tab>",
+    },
+  },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = "make",
+  init = function()
+    require("sandu.plugins.ai.avante.keymaps")
+  end,
   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
   dependencies = {
     "stevearc/dressing.nvim",
