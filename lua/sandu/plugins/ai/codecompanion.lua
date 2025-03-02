@@ -24,13 +24,20 @@ return {
   init = function()
     require("sandu.plugins.ai.codecompanion.fidget-spinner"):init()
     require("sandu.plugins.ai.codecompanion.lualine"):init()
+
+    require("which-key").add({
+      { "<leader>am", group = "CodeCompanion" },
+      { "<leader>amb", ":CodeCompanionActions<CR>", desc = "Companion - 🎯 Open Action Palette" },
+      { "<leader>amc", ":CodeCompanionChat<CR>", desc = "Companion - 💬 Open AI chat" },
+      { "<leader>amx", ":CodeCompanionContext<CR>", desc = "Companion - 📄 Add file context" },
+      {
+        "<leader>ams",
+        ":CodeCompanionSelection<CR>",
+        mode = "v",
+        desc = "Companion - ✂️ Use selection as context",
+      },
+    })
   end,
-  keys = {
-    { "<leader>ab", ":CodeCompanionActions<CR>", desc = "Companion - 🎯 Open Action Palette" },
-    { "<leader>ac", ":CodeCompanionChat<CR>", desc = "Companion - 💬 Open AI chat" },
-    { "<leader>ax", ":CodeCompanionContext<CR>", desc = "Companion - 📄 Add file context" },
-    { "<leader>as", ":CodeCompanionSelection<CR>", mode = "v", desc = "Companion - ✂️ Use selection as context" },
-  },
   config = function()
     require("codecompanion").setup({
       adapters = {
