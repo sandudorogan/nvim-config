@@ -22,8 +22,8 @@ return {
     },
   },
   init = function()
-    require("sandu.plugins.ai.codecompanion.fidget-spinner"):init()
-    require("sandu.plugins.ai.codecompanion.lualine"):init()
+    require("sandu.plugins.neovim.ai.codecompanion.fidget-spinner"):init()
+    require("sandu.plugins.neovim.ai.codecompanion.lualine"):init()
 
     require("which-key").add({
       { "<leader>am", group = "🤖CodeCompanion" },
