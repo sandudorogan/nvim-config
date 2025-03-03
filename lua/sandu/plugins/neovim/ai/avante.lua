@@ -80,7 +80,7 @@ return {
   -- For Windows: build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
 
   init = function()
-    require("sandu.plugins.ai.avante.keymaps")
+    require("sandu.plugins.neovim.ai.avante.keymaps")
   end,
 
   dependencies = {
