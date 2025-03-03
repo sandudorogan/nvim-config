@@ -53,7 +53,7 @@ return {
       },
       strategies = {
         chat = {
-          slash_commands = require("sandu.plugins.ai.codecompanion.slash-commands"),
+          slash_commands = require("sandu.plugins.neovim.ai.codecompanion.slash-commands"),
         },
       },
     })

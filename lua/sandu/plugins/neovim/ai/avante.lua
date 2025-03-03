@@ -24,7 +24,7 @@ return {
     dual_boost = {
       enabled = true,
       first_provider = "copilot",
-      second_provider = "openai",
+      second_provider = "claude",
       providers = {
         copilot = {
           model = "claude-3.7-sonnet-thought",
@@ -45,7 +45,7 @@ return {
 
     -- Behavior settings
     behaviour = {
-      auto_suggestions = true,
+      auto_suggestions = false,
       auto_suggestions_respect_ignore = true,
       auto_apply_diff_after_generation = true,
       enable_cursor_planning_mode = true,
