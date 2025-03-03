@@ -12,11 +12,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  { import = "sandu.plugins" },
-  { import = "sandu.plugins.lsp" },
-  { import = "sandu.plugins.mini" },
-  { import = "sandu.plugins.ai" },
-}, {
+  { import = "sandu.plugins.always" },
+  { import = "sandu.plugins.neovim", cond = (function() return not vim.g.vscode end) },
+  { import = "sandu.plugins.neovim.lsp", cond = (function() return not vim.g.vscode end) },
+  { import = "sandu.plugins.neovim.mini", cond = (function() return not vim.g.vscode end) },
+  { import = "sandu.plugins.neovim.ai", cond = (function() return not vim.g.vscode end) },
+}, 
+  {
   checker = {
     enabled = true,
     notify = false,

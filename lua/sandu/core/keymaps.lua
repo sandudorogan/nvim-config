@@ -3,8 +3,6 @@ vim.g.maplocalleader = ","
 
 local keymap = vim.keymap -- for conciseness
 
-keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
-
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 -- window management
@@ -19,4 +17,14 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
-keymap.set("n", "<leader>ot", "<cmd>terminal<CR>", { desc = "Open terminal" }) -- open terminal
+if vim.g.vscode then
+    keymap.set("n", "<leader>ot", "<cmd>vscode-terminal-tabnew<CR>", { desc = "Open terminal" }) -- open terminal
+
+    keymap.set("n", "<leader>gc", "<Plug>VSCodeCommentary", { desc = "Commentary" })
+    keymap.set("n", "<leader>gc", "<Plug>VSCodeCommentary", { desc = "Commentary" })
+    keymap.set("n", "<leader>gc", "<Plug>VSCodeCommentary", { desc = "Commentary" })
+    keymap.set("n", "<leader>gcc", "<Plug>VSCodeCommentaryLine", { desc = "Commentary" })
+
+else
+    keymap.set("n", "<leader>ot", "<cmd>terminal<CR>", { desc = "Open terminal" }) -- open terminal
+end
