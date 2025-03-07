@@ -1,7 +1,7 @@
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  version = false,
+  version = true,
   enabled = true,
   opts = {
     -- Main configuration
@@ -17,7 +17,7 @@ return {
       model = "claude-3-7-sonnet-20250219",
     },
     openai = {
-      model = "gpt-4o",
+      model = "o3-mini",
     },
 
     -- Dual boost setup
@@ -27,10 +27,10 @@ return {
       second_provider = "claude",
       providers = {
         copilot = {
-          model = "claude-3.7-sonnet-thought",
+          model = "claude-3.7-sonnet",
         },
         openai = {
-          model = "gpt-4o",
+          model = "o3-mini",
         },
         claude = {
           model = "claude-3.7-sonnet-20250219",
@@ -41,6 +41,9 @@ return {
     -- RAG service
     rag_service = {
       enabled = false,
+      host_mount = os.getenv("HOME") .. "/workdir",
+      llm_model = "o3-mini", -- The LLM model to use for RAG service
+      embed_model = "o3-mini", -- The embedding model to use for RAG service
     },
 
     -- Behavior settings
