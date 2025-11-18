@@ -40,17 +40,6 @@ return {
   end,
   config = function()
     require("codecompanion").setup({
-      adapters = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "claude-3.7-sonnet-thought",
-              },
-            },
-          })
-        end,
-      },
       strategies = {
         chat = {
           slash_commands = require("sandu.plugins.neovim.ai.codecompanion.slash-commands"),
