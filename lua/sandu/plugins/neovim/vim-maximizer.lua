@@ -1,6 +1,7 @@
 return {
-  "szw/vim-maximizer",
+  "declancm/maximize.nvim",
   keys = {
-    { "<leader>sm", "<cmd>MaximizerToggle<CR>", desc = "Maximize/minimize a split" },
+    { "<leader>sm", function() require("maximize").toggle() end, desc = "Maximize/minimize split" },
   },
+  config = true,
 }

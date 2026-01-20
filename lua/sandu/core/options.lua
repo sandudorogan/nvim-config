@@ -44,6 +44,15 @@ opt.swapfile = false
 
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
+-- Neovim 0.11 features
+opt.winborder = "rounded" -- Global border for floating windows
+
+-- LSP-based folding
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
+opt.foldlevel = 99
+opt.foldenable = true
+
 if vim.g.vscode then
     -- Disable some Neovim features that are handled by VSCode
     opt.foldcolumn = "0" -- Disable Neovim's fold column (VSCode handles this)
@@ -90,23 +99,6 @@ if vim.g.vscode then
     -- Disable Neovim's built-in ruler (VSCode handles this)
     opt.ruler = false
     
-    -- Disable Neovim's built-in wildmenu (VSCode handles this)
-    opt.wildmenu = false
-    
-    -- Disable Neovim's built-in wildmode (VSCode handles this)
-    opt.wildmode = "list:longest,full"
-    
-    -- Disable Neovim's built-in wildignore (VSCode handles this)
-    opt.wildignore = ""
-    
-    -- Disable Neovim's built-in wildignorecase (VSCode handles this)
-    opt.wildignorecase = false
-    
-    -- Disable Neovim's built-in wildcharm (VSCode handles this)
-    opt.wildcharm = 0
-    
-    -- Disable Neovim's built-in wildoptions (VSCode handles this)
-    opt.wildoptions = ""
     -- Disable Neovim's built-in wildmenu (VSCode handles this)
     opt.wildmenu = false
     
