@@ -7,7 +7,7 @@ return {
       if handle ~= nil then
         local result = handle:read("*a")
         handle:close()
-        chat:add_reference({ content = result }, "git_files", "<git_files>")
+        chat:add_context({ role = "user", content = result }, "git", "<git_files>")
       else
         return vim.notify("No git files available", vim.log.levels.INFO, { title = "CodeCompanion" })
       end
@@ -26,9 +26,9 @@ return {
         handle:close()
 
         if result and result ~= "" then
-          chat:add_reference({ content = result }, "git_status", "<git_status>")
+          chat:add_context({ role = "user", content = result }, "git", "<git_status>")
         else
-          return vim.notify("No changes detected in git diff", vim.log.levels.INFO, { title = "CodeCompanion" })
+          return vim.notify("No changes detected in git status", vim.log.levels.INFO, { title = "CodeCompanion" })
         end
       else
         return vim.notify("No git status available", vim.log.levels.INFO, { title = "CodeCompanion" })
@@ -48,7 +48,7 @@ return {
         handle:close()
 
         if result and result ~= "" then
-          chat:add_reference({ content = result }, "git_diff", "<git_diff>")
+          chat:add_context({ role = "user", content = result }, "git", "<git_diff>")
         else
           return vim.notify("No changes detected in git diff", vim.log.levels.INFO, { title = "CodeCompanion" })
         end

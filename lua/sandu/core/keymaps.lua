@@ -55,6 +55,21 @@ if vim.g.vscode then
     keymap.set("n", "<leader>uz", "<Cmd>call VSCodeNotify('workbench.action.toggleZenMode')<CR>", { desc = "Toggle zen mode" })
 else
     keymap.set("n", "<leader>ot", "<cmd>terminal<CR>", { desc = "Open terminal" }) -- open terminal
+
+    local claude_term
+    keymap.set("n", "<leader>oc", function()
+      if not claude_term then
+        claude_term = require("toggleterm.terminal").Terminal:new({
+          cmd = "claude --dangerously-skip-permissions --continue",
+          direction = "float",
+          float_opts = { border = "curved" },
+          on_exit = function()
+            claude_term = nil
+          end,
+        })
+      end
+      claude_term:toggle()
+    end, { desc = "Claude Code (yolo)" })
 end
 
 -- Ensure Ctrl+I works correctly in Clojure files

@@ -7,42 +7,37 @@ return {
     "zbirenbaum/copilot.lua",
     "j-hui/fidget.nvim",
   },
-  opts = {
-    strategies = {
-      chat = {
-        adapter = "copilot",
-      },
-    },
-    ui = {
-      popup = {
-        border = "rounded",
-        width = 0.6,
-        height = 0.6,
-      },
-    },
-  },
   init = function()
     require("sandu.plugins.neovim.ai.codecompanion.fidget-spinner"):init()
-    require("sandu.plugins.neovim.ai.codecompanion.lualine"):init()
 
     require("which-key").add({
       { "<leader>am", group = "🤖CodeCompanion" },
       { "<leader>amb", ":CodeCompanionActions<CR>", desc = "Companion - 🎯 Open Action Palette" },
       { "<leader>amc", ":CodeCompanionChat<CR>", desc = "Companion - 💬 Open AI chat" },
-      { "<leader>amx", ":CodeCompanionContext<CR>", desc = "Companion - 📄 Add file context" },
       {
         "<leader>ams",
-        ":CodeCompanionSelection<CR>",
+        ":CodeCompanionChat add<CR>",
         mode = "v",
-        desc = "Companion - ✂️ Use selection as context",
+        desc = "Companion - ✂️ Add selection to chat",
       },
     })
   end,
   config = function()
     require("codecompanion").setup({
-      strategies = {
+      interactions = {
         chat = {
+          adapter = "copilot",
           slash_commands = require("sandu.plugins.neovim.ai.codecompanion.slash-commands"),
+        },
+      },
+      display = {
+        chat = {
+          window = {
+            layout = "float",
+            border = "rounded",
+            width = 0.6,
+            height = 0.6,
+          },
         },
       },
     })
