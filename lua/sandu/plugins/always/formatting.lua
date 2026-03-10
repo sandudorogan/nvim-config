@@ -5,6 +5,12 @@ return {
     local conform = require("conform")
 
     conform.setup({
+      formatters = {
+        -- Explicitly configure zprint to use the correct path
+        zprint = {
+          command = "/opt/homebrew/bin/zprint",
+        },
+      },
       formatters_by_ft = {
         javascript = { "prettier" },
         typescript = { "prettier" },
@@ -19,7 +25,7 @@ return {
         liquid = { "prettier" },
         lua = { "stylua" },
         python = { "isort", "black" },
-        clojure = { "zprint" },
+        -- clojure = { "zprint" },
       },
       format_on_save = {
         lsp_fallback = true,
