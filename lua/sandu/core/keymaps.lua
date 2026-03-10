@@ -56,20 +56,23 @@ if vim.g.vscode then
 else
     keymap.set("n", "<leader>ot", "<cmd>terminal<CR>", { desc = "Open terminal" }) -- open terminal
 
-    local claude_term
-    keymap.set("n", "<leader>oc", function()
-      if not claude_term then
-        claude_term = require("toggleterm.terminal").Terminal:new({
-          cmd = "claude --dangerously-skip-permissions --continue",
-          direction = "float",
-          float_opts = { border = "curved" },
-          on_exit = function()
-            claude_term = nil
-          end,
-        })
+    local function persistent_term(cmd, direction)
+      local term
+      return function()
+        if not term then
+          term = require("toggleterm.terminal").Terminal:new({
+            cmd = cmd,
+            direction = direction or "vertical",
+            on_exit = function() term = nil end,
+          })
+        end
+        local size = (direction or "vertical") == "vertical" and vim.o.columns / 2 or vim.o.lines / 2
+        term:toggle(size)
       end
-      claude_term:toggle()
-    end, { desc = "Claude Code (yolo)" })
+    end
+
+    keymap.set("n", "<leader>oc", persistent_term("claude --dangerously-skip-permissions --continue"), { desc = "Claude Code (yolo)" })
+    keymap.set("n", "<leader>og", persistent_term("codex --full-auto"), { desc = "Codex (full-auto)" })
 end
 
 -- Ensure Ctrl+I works correctly in Clojure files
