@@ -1,6 +1,7 @@
 local api = vim.api
 local fn = vim.fn
 local keymap = vim.keymap
+local cljs_modules = require("sandu.lsp.cljs_modules")
 local lsp_util = vim.lsp.util
 
 local clojure_dependency_group =
@@ -258,6 +259,10 @@ local function jump_request(method)
       end
 
       if vim.tbl_isempty(matches) then
+        if method == "textDocument/definition" and cljs_modules.jump(bufnr) then
+          return
+        end
+
         vim.notify("No " .. method_title(method) .. " found", vim.log.levels.INFO)
         return
       end
