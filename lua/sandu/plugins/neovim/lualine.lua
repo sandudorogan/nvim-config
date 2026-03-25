@@ -3,6 +3,7 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "AndreM222/copilot-lualine",
+    "catppuccin/nvim",
   },
   config = function()
     local lualine = require("lualine")
