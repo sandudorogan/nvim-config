@@ -1,6 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
+  branch = "master",
   dependencies = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -34,6 +34,29 @@ return {
           },
         },
       },
+      pickers = {
+        find_files = {
+          previewer = true,
+          layout_strategy = "horizontal",
+          layout_config = {
+            width = 0.95,
+            height = 0.9,
+            preview_cutoff = 1,
+            preview_width = 0.55,
+          },
+        },
+        lsp_references = {
+          show_line = true,
+          trim_text = true,
+          layout_strategy = "vertical",
+          layout_config = {
+            width = 0.95,
+            height = 0.95,
+            preview_cutoff = 1,
+            preview_height = 0.6,
+          },
+        },
+      },
     })
 
     telescope.load_extension("fzf")
@@ -46,6 +69,6 @@ return {
     keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
     keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
     keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-    keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Find todos" })
+    keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Find keymaps" })
   end,
 }

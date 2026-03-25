@@ -67,3 +67,7 @@ vim.diagnostic.config({
     },
   },
 })
+
+if vim.fn.executable("clojure-lsp") == 1 then
+  vim.lsp.enable("clojure_lsp")
+end

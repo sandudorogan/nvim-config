@@ -6,9 +6,8 @@ return {
 
     conform.setup({
       formatters = {
-        -- Explicitly configure zprint to use the correct path
         zprint = {
-          command = "/opt/homebrew/bin/zprint",
+          command = vim.fn.exepath("zprint"),
         },
       },
       formatters_by_ft = {
@@ -25,7 +24,7 @@ return {
         liquid = { "prettier" },
         lua = { "stylua" },
         python = { "isort", "black" },
-        -- clojure = { "zprint" },
+        clojure = { "zprint" },
       },
       format_on_save = {
         lsp_fallback = true,

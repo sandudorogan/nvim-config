@@ -15,6 +15,7 @@ return {
       yellow = "#FFDA7B",
       red = "#FF4A4A",
       fg = "#c3ccdc",
+      fg_gutter = "#627E97",
       bg = "#112638",
       inactive_bg = "#2c3043",
     }
@@ -46,9 +47,9 @@ return {
         c = { bg = colors.bg, fg = colors.fg },
       },
       inactive = {
-        a = { bg = colors.inactive_bg, fg = colors.semilightgray, gui = "bold" },
-        b = { bg = colors.inactive_bg, fg = colors.semilightgray },
-        c = { bg = colors.inactive_bg, fg = colors.semilightgray },
+        a = { bg = colors.inactive_bg, fg = colors.fg_gutter, gui = "bold" },
+        b = { bg = colors.inactive_bg, fg = colors.fg_gutter },
+        c = { bg = colors.inactive_bg, fg = colors.fg_gutter },
       },
     }
 
