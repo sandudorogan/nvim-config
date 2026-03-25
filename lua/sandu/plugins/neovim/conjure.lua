@@ -4,8 +4,8 @@ return {
     ft = { "clojure", "fennel", "python" }, -- etc
     lazy = true,
     init = function()
-      -- Set configuration options here
       vim.g["conjure#debug"] = false
+      vim.g["conjure#filetypes"] = { "clojure", "fennel", "python" }
     end,
   },
 }
