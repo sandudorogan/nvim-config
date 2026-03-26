@@ -44,6 +44,9 @@ return {
         "pylint",
         "eslint_d",
       },
+      integrations = {
+        ["mason-nvim-dap"] = false,
+      },
     },
     dependencies = {
       "williamboman/mason.nvim",
@@ -51,6 +54,9 @@ return {
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
+    cond = function()
+      return #vim.api.nvim_list_uis() > 0
+    end,
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",

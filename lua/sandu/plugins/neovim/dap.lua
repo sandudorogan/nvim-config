@@ -10,6 +10,9 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
+    cond = function()
+      return #vim.api.nvim_list_uis() > 0
+    end,
     dependencies = {
       "jay-babu/mason-nvim-dap.nvim",
       "nvim-neotest/nvim-nio",
