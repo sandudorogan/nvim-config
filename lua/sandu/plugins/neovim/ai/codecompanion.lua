@@ -5,7 +5,22 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     "zbirenbaum/copilot.lua",
-    "j-hui/fidget.nvim",
+    {
+      "j-hui/fidget.nvim",
+      opts = {
+        notification = {
+          override_vim_notify = true,
+          window = {
+            avoid = { "NvimTree" },
+          },
+        },
+        integration = {
+          ["nvim-tree"] = {
+            enable = false,
+          },
+        },
+      },
+    },
   },
   init = function()
     require("sandu.plugins.neovim.ai.codecompanion.fidget-spinner"):init()
