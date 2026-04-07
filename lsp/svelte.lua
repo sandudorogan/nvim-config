@@ -11,6 +11,8 @@ local root_markers = vim.fn.has("nvim-0.11.3") == 1
     and { project_root_markers, { ".git" } }
   or vim.list_extend(vim.deepcopy(project_root_markers), { ".git" })
 
+local svelte_augroup = vim.api.nvim_create_augroup("lspconfig.svelte", {})
+
 return {
   cmd = { "svelteserver", "--stdio" },
   filetypes = { "svelte" },
@@ -24,13 +26,21 @@ return {
 
     on_dir(nil)
   end,
-  on_attach = function(client)
+  on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePost", {
-      group = vim.api.nvim_create_augroup("SvelteTsJsReload", { clear = true }),
+      group = svelte_augroup,
       pattern = { "*.js", "*.ts" },
       callback = function(ctx)
         client:notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
       end,
     })
+
+    vim.api.nvim_buf_create_user_command(bufnr, "LspMigrateToSvelte5", function()
+      client:exec_cmd({
+        title = "Migrate Component to Svelte 5 Syntax",
+        command = "migrate_to_svelte_5",
+        arguments = { vim.uri_from_bufnr(bufnr) },
+      })
+    end, { desc = "Migrate Component to Svelte 5 Syntax" })
   end,
 }

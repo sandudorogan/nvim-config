@@ -9,6 +9,11 @@ local config_root_markers = {
   "postcss.config.ts",
 }
 
+local framework_root_markers = {
+  "mix.lock",
+  "Gemfile.lock",
+}
+
 local function readfile_contains(path, text)
   local ok, lines = pcall(vim.fn.readfile, path)
   if not ok then
@@ -22,6 +27,26 @@ local function readfile_contains(path, text)
   end
 
   return false
+end
+
+local function contains_tailwind(path)
+  return readfile_contains(path, "tailwindcss") or readfile_contains(path, "tailwind")
+end
+
+local function upward_file(path, candidates, predicate)
+  local found = vim.fs.find(candidates, {
+    path = path,
+    type = "file",
+    upward = true,
+  })
+
+  for _, candidate in ipairs(found) do
+    if not predicate or predicate(candidate) then
+      return candidate
+    end
+  end
+
+  return nil
 end
 
 return {
@@ -58,18 +83,19 @@ return {
     end
 
     local filename = vim.api.nvim_buf_get_name(bufnr)
-    local package_json = vim.fs.find("package.json", {
-      path = filename,
-      type = "file",
-      upward = true,
-      limit = 1,
-    })[1]
+    local package_json = upward_file(filename, { "package.json" }, contains_tailwind)
 
-    if package_json and readfile_contains(package_json, '"tailwindcss"') then
+    if package_json then
       on_dir(vim.fs.dirname(package_json))
       return
     end
 
-    on_dir(nil)
+    local framework_root = upward_file(filename, framework_root_markers, contains_tailwind)
+    if framework_root then
+      on_dir(vim.fs.dirname(framework_root))
+      return
+    end
+
+    on_dir(vim.fs.root(bufnr, { ".git" }))
   end,
 }
