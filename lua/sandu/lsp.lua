@@ -353,3 +353,19 @@ vim.diagnostic.config({
 if vim.fn.executable("clojure-lsp") == 1 then
   vim.lsp.enable("clojure_lsp")
 end
+
+for _, server in ipairs({
+  "ts_ls",
+  "html",
+  "cssls",
+  "tailwindcss",
+  "svelte",
+  "lua_ls",
+  "graphql",
+  "emmet_ls",
+  "prismals",
+  "pyright",
+  "eslint",
+}) do
+  vim.lsp.enable(server)
+end
