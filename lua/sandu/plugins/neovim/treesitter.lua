@@ -41,35 +41,34 @@ local function highlight_filetypes(parser_names)
   return patterns
 end
 
+local function can_manage_parsers()
+  return vim.fn.executable("tree-sitter") == 1
+end
+
 local function treesitter_root()
   local runtime_files = vim.api.nvim_get_runtime_file("lua/nvim-treesitter/init.lua", false)
   local init_path = runtime_files[1]
-
   if not init_path then
     return nil
   end
-
   return vim.fn.fnamemodify(init_path, ":h:h:h")
 end
 
 local function ensure_plugin_runtime()
   local root = treesitter_root()
-
   if not root then
     return
   end
 
   local runtime = vim.fs.joinpath(root, "runtime")
-
   if vim.uv.fs_stat(runtime) and not vim.o.runtimepath:find(runtime, 1, true) then
-    vim.opt.runtimepath:append(runtime)
+    vim.o.runtimepath = vim.o.runtimepath .. "," .. runtime
   end
 end
 
 local function bundled_parser_path(lang)
   local nvim_root = vim.fn.fnamemodify(vim.v.progpath, ":h:h")
   local path = vim.fs.joinpath(nvim_root, "lib", "nvim", "parser", lang .. ".so")
-
   if vim.uv.fs_stat(path) then
     return path
   end
@@ -77,13 +76,11 @@ end
 
 local function plugin_parser_path(lang)
   local root = treesitter_root()
-
   if not root then
     return nil
   end
 
   local path = vim.fs.joinpath(root, "parser", lang .. ".so")
-
   if vim.uv.fs_stat(path) then
     return path
   end
@@ -91,7 +88,6 @@ end
 
 local function site_parser_path(lang)
   local path = vim.fs.joinpath(vim.fn.stdpath("data"), "site", "parser", lang .. ".so")
-
   if vim.uv.fs_stat(path) then
     return path
   end
@@ -100,7 +96,6 @@ end
 local function prefer_bundled_parsers()
   for _, lang in ipairs({ "c", "lua", "markdown", "vim", "vimdoc" }) do
     local path = bundled_parser_path(lang)
-
     if path then
       vim.treesitter.language.add(lang, { path = path })
     end
@@ -111,16 +106,11 @@ local function register_plugin_parsers(parser_names)
   for _, lang in ipairs(parser_names) do
     if not site_parser_path(lang) then
       local path = plugin_parser_path(lang)
-
       if path then
         vim.treesitter.language.add(lang, { path = path })
       end
     end
   end
-end
-
-local function can_manage_parsers()
-  return vim.fn.executable("tree-sitter") == 1
 end
 
 return {
@@ -155,7 +145,6 @@ return {
       pattern = highlight_filetypes(languages),
       callback = function(ev)
         vim.treesitter.start(ev.buf)
-
         if vim.bo[ev.buf].buftype == "" then
           vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end
