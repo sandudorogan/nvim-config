@@ -33,6 +33,10 @@ require("lazy").setup({
     end,
   },
 }, {
+  git = {
+    -- Avoid promisor-remote fetches during checkout when plugin updates run from Neovim.
+    filter = false,
+  },
   checker = {
     enabled = true,
     notify = false,
