@@ -2,6 +2,7 @@ local api = vim.api
 local fn = vim.fn
 local keymap = vim.keymap
 local cljs_modules = require("sandu.lsp.cljs_modules")
+local lsp_watchfiles = require("sandu.lsp.watchfiles")
 local lsp_util = vim.lsp.util
 
 local clojure_dependency_group =
@@ -349,6 +350,8 @@ vim.diagnostic.config({
     },
   },
 })
+
+lsp_watchfiles.preload()
 
 if vim.fn.executable("clojure-lsp") == 1 then
   vim.lsp.enable("clojure_lsp")
