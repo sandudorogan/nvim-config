@@ -24,7 +24,7 @@ return {
 
     lualine.setup({
       options = {
-        theme = "catppuccin-mocha",
+        theme = "catppuccin-macchiato",
       },
       sections = {
         lualine_b = { "diagnostics" },

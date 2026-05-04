@@ -4,7 +4,12 @@ return {
   priority = 1000,
   config = function()
     require("catppuccin").setup({
-      flavour = "mocha",
+      flavour = "macchiato",
+      custom_highlights = function(colors)
+        return {
+          ["@variable.clojure"] = { fg = colors.lavender },
+        }
+      end,
       integrations = {
         cmp = true,
         gitsigns = true,
@@ -15,6 +20,5 @@ return {
     })
 
     vim.cmd.colorscheme("catppuccin")
-    vim.api.nvim_set_hl(0, "@variable.clojure", { link = "@variable.parameter" })
   end,
 }
