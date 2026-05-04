@@ -46,6 +46,9 @@ end
 
 local config, system_calls, wait_called = load_config_with_stubs()
 
+assert(vim.deep_equal(config.cmd, { "clojure-lsp" }), "expected clojure_lsp cmd to be configured")
+assert(vim.tbl_contains(config.filetypes, "clojure"), "expected clojure_lsp to attach to clojure files")
+assert(vim.tbl_contains(config.filetypes, "edn"), "expected clojure_lsp to attach to edn files")
 assert(type(config.root_dir) == "function", "expected clojure_lsp root_dir to be a function")
 assert(type(config.before_init) == "function", "expected clojure_lsp before_init to be configured")
 assert(wait_called == false, "expected clojure_lsp config load to avoid synchronous wait()")

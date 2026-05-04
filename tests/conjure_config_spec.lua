@@ -21,6 +21,9 @@ local original_action_preload = package.preload["conjure.client.clojure.nrepl.ac
 package.loaded["conjure.client.clojure.nrepl.action"] = nil
 package.preload["conjure.client.clojure.nrepl.action"] = function()
   return {
+    ["out-subscribe"] = function() end,
+    ["out-unsubscribe"] = function() end,
+    ["passive-ns-require"] = function() end,
     ["connect-port-file"] = function(opts)
       connect_calls = connect_calls + 1
       last_connect_opts = opts
