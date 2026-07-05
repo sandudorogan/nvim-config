@@ -310,7 +310,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- set keybinds
     opts.desc = "Show LSP references"
-    keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+    keymap.set("n", "gR", function()
+      Snacks.picker.lsp_references()
+    end, opts) -- show definition, references
 
     opts.desc = "Go to declaration"
     keymap.set("n", "gD", jump_request("textDocument/declaration"), opts)
@@ -331,7 +333,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
     opts.desc = "Show buffer diagnostics"
-    keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+    keymap.set("n", "<leader>D", function()
+      Snacks.picker.diagnostics_buffer()
+    end, opts) -- show  diagnostics for file
 
     opts.desc = "Show line diagnostics"
     keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line

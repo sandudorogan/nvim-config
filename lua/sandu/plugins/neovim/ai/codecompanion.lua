@@ -12,7 +12,7 @@ return {
         notification = {
           override_vim_notify = true,
           window = {
-            avoid = { "NvimTree" },
+            avoid = { "snacks_picker_list" },
           },
         },
       },

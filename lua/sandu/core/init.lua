@@ -6,7 +6,7 @@ require("sandu.core.groups")
 -- 1. Neovim 0.9.0 or higher
 -- 2. Git (for plugin management)
 -- 3. A Nerd Font for icons (https://www.nerdfonts.com)
--- 4. ripgrep (https://github.com/BurntSushi/ripgrep) for Telescope file search
+-- 4. ripgrep (https://github.com/BurntSushi/ripgrep) for picker text search
 -- 5. fd (https://github.com/sharkdp/fd) for faster file finding
 -- 6. Node.js (for LSP servers, formatters and Copilot)
 -- 7. npm/yarn (for installing LSP servers)

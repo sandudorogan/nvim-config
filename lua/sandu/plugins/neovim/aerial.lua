@@ -17,12 +17,7 @@ return {
       vim.keymap.set("n", "]a", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Next aerial symbol" })
     end,
   },
-  config = function(_, opts)
-    require("aerial").setup(opts)
-    require("telescope").load_extension("aerial")
-  end,
   keys = {
     { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline" },
-    { "<leader>fa", "<cmd>Telescope aerial<CR>", desc = "Find symbols (aerial)" },
   },
 }

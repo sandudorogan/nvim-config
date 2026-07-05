@@ -426,21 +426,7 @@ function M.jump(bufnr, symbol)
     items = locations,
   })
 
-  local ok, telescope = pcall(require, "telescope.builtin")
-  if ok and telescope.loclist then
-    telescope.loclist({
-      previewer = true,
-      layout_strategy = "vertical",
-      layout_config = {
-        width = 0.95,
-        height = 0.95,
-        preview_cutoff = 1,
-        preview_height = 0.6,
-      },
-    })
-  else
-    vim.cmd.lopen()
-  end
+  Snacks.picker.loclist()
 
   return true
 end

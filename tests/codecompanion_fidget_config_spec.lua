@@ -28,7 +28,7 @@ t.run(function()
 
   assert(type(captured.setup) == "table", "expected fidget setup to receive options")
   assert(
-    vim.deep_equal(captured.setup.notification.window.avoid, { "NvimTree" }),
-    "expected fidget to avoid the NvimTree filetype through window options"
+    vim.deep_equal(captured.setup.notification.window.avoid, { "snacks_picker_list" }),
+    "expected fidget to avoid the snacks explorer filetype through window options"
   )
 end)

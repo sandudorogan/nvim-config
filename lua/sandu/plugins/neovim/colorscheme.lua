@@ -11,10 +11,10 @@ return {
         }
       end,
       integrations = {
-        cmp = true,
+        blink_cmp = true,
         gitsigns = true,
         mason = true,
-        telescope = true,
+        snacks = { enabled = true },
         treesitter = true,
       },
     })
