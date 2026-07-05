@@ -40,3 +40,10 @@ luac.out
 *.hex
 *.DS_Store
 
+
+# Local logs and scratch
+nvim.log
+.nvimlog
+.tmp/
+.python-version
+docs/superpowers/
