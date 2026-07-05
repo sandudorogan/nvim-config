@@ -282,6 +282,25 @@ local function jump_request(method)
   end
 end
 
+local function restart_clients(bufnr)
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+  if vim.tbl_isempty(clients) then
+    vim.notify("No clients attached to current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  local names = {}
+  for _, client in ipairs(clients) do
+    names[#names + 1] = client.name
+  end
+
+  vim.lsp.enable(names, false)
+  vim.defer_fn(function()
+    vim.lsp.enable(names)
+  end, 500)
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
@@ -331,7 +350,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
     opts.desc = "Restart LSP"
-    keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+    keymap.set("n", "<leader>rs", function()
+      restart_clients(ev.buf)
+    end, opts)
   end,
 })
 
