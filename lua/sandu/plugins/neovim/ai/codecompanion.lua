@@ -17,7 +17,6 @@ return {
         },
       },
       config = function(_, opts)
-        require("fidget.integration.nvim-tree").options.enable = false
         require("fidget").setup(opts)
       end,
     },
