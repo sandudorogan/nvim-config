@@ -1,55 +1,43 @@
-local function load_config_with_stubs()
-  local original_env_java_home = vim.env.JAVA_HOME
-  local original_system = vim.system
-  local original_executable = vim.fn.executable
+local t = dofile(vim.fn.getcwd() .. "/tests/helper.lua")
 
-  vim.env.JAVA_HOME = nil
+local real_executable = vim.fn.executable
 
-  local wait_called = false
-  local system_calls = {}
+local wait_called = false
+local system_calls = {}
 
-  vim.fn.executable = function(binary)
-    if binary == "/usr/libexec/java_home" then
-      return 1
-    end
+t.patch(vim.env, "JAVA_HOME", nil)
 
-    return original_executable(binary)
+t.patch(vim.fn, "executable", function(binary)
+  if binary == "/usr/libexec/java_home" then
+    return 1
   end
 
-  vim.system = function(cmd, opts, on_exit)
-    table.insert(system_calls, {
-      cmd = cmd,
-      opts = opts,
-      on_exit = on_exit,
-    })
+  return real_executable(binary)
+end)
 
-    return {
-      wait = function()
-        wait_called = true
-        error("wait() should not be called while loading the clojure_lsp config")
-      end,
-    }
-  end
+t.patch(vim, "system", function(cmd, opts, on_exit)
+  table.insert(system_calls, {
+    cmd = cmd,
+    opts = opts,
+    on_exit = on_exit,
+  })
 
-  local ok, result = pcall(function()
-    return dofile(vim.fn.getcwd() .. "/lsp/clojure_lsp.lua")
-  end)
+  return {
+    wait = function()
+      wait_called = true
+      error("wait() should not be called while loading the clojure_lsp config")
+    end,
+  }
+end)
 
-  vim.env.JAVA_HOME = original_env_java_home
-  vim.system = original_system
-  vim.fn.executable = original_executable
+t.run(function()
+  local config = t.load("lsp/clojure_lsp.lua")
 
-  assert(ok, result)
-
-  return result, system_calls, wait_called
-end
-
-local config, system_calls, wait_called = load_config_with_stubs()
-
-assert(vim.deep_equal(config.cmd, { "clojure-lsp" }), "expected clojure_lsp cmd to be configured")
-assert(vim.tbl_contains(config.filetypes, "clojure"), "expected clojure_lsp to attach to clojure files")
-assert(vim.tbl_contains(config.filetypes, "edn"), "expected clojure_lsp to attach to edn files")
-assert(type(config.root_dir) == "function", "expected clojure_lsp root_dir to be a function")
-assert(type(config.before_init) == "function", "expected clojure_lsp before_init to be configured")
-assert(wait_called == false, "expected clojure_lsp config load to avoid synchronous wait()")
-assert(#system_calls == 0, "expected clojure_lsp config load to avoid starting java_home lookup eagerly")
+  assert(vim.deep_equal(config.cmd, { "clojure-lsp" }), "expected clojure_lsp cmd to be configured")
+  assert(vim.tbl_contains(config.filetypes, "clojure"), "expected clojure_lsp to attach to clojure files")
+  assert(vim.tbl_contains(config.filetypes, "edn"), "expected clojure_lsp to attach to edn files")
+  assert(type(config.root_dir) == "function", "expected clojure_lsp root_dir to be a function")
+  assert(type(config.before_init) == "function", "expected clojure_lsp before_init to be configured")
+  assert(wait_called == false, "expected clojure_lsp config load to avoid synchronous wait()")
+  assert(#system_calls == 0, "expected clojure_lsp config load to avoid starting java_home lookup eagerly")
+end)

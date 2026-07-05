@@ -1,44 +1,34 @@
-package.path = table.concat({
-  vim.fn.getcwd() .. "/lua/?.lua",
-  vim.fn.getcwd() .. "/lua/?/init.lua",
-  package.path,
-}, ";")
+local t = dofile(vim.fn.getcwd() .. "/tests/helper.lua")
 
 local captured = {}
-local original_lualine = package.loaded["lualine"]
-local original_lazy_status = package.loaded["lazy.status"]
-local original_get_clients = vim.lsp.get_clients
 
-package.loaded["lualine"] = {
+t.stub_module("lualine", {
   setup = function(opts)
     captured.setup = opts
   end,
-}
+})
 
-package.loaded["lazy.status"] = {
+t.stub_module("lazy.status", {
   updates = function()
     return "0 updates"
   end,
   has_updates = function()
     return false
   end,
-}
+})
 
-local ok, result = pcall(function()
-  local spec = dofile(vim.fn.getcwd() .. "/lua/sandu/plugins/neovim/lualine.lua")
+t.run(function()
+  local spec = t.load("lua/sandu/plugins/neovim/lualine.lua")
 
   assert(type(spec.config) == "function", "expected lualine plugin spec to expose config()")
 
   spec.config()
 
-  return captured.setup
-end)
+  local setup = captured.setup
 
-local test_ok, test_result = xpcall(function()
-  assert(ok, result)
-  assert(type(result.sections.lualine_x) == "table", "expected lualine_x section configuration")
+  assert(type(setup.sections.lualine_x) == "table", "expected lualine_x section configuration")
 
-  vim.lsp.get_clients = function(opts)
+  t.patch(vim.lsp, "get_clients", function(opts)
     if opts ~= nil then
       assert(type(opts) == "table", "expected LSP lookup to receive options")
       assert(opts.bufnr == 0, "expected LSP lookup to be scoped to current buffer")
@@ -48,11 +38,11 @@ local test_ok, test_result = xpcall(function()
       { name = "lua_ls" },
       { name = "copilot" },
     }
-  end
+  end)
 
   local lsp_component
 
-  for _, component in ipairs(result.sections.lualine_x) do
+  for _, component in ipairs(setup.sections.lualine_x) do
     if type(component) == "table" and type(component[1]) == "function" and type(component.cond) == "function" then
       local ok_render, rendered = pcall(component[1])
 
@@ -68,15 +58,9 @@ local test_ok, test_result = xpcall(function()
   assert(lsp_component.cond() == true, "expected LSP component to be visible when clients are attached")
   assert(lsp_component[1]() == " lua_ls, copilot", "expected LSP component to render attached client names")
 
-  vim.lsp.get_clients = function()
+  t.patch(vim.lsp, "get_clients", function()
     return {}
-  end
+  end)
 
   assert(lsp_component.cond() == false, "expected LSP component to hide when no clients are attached")
-end, debug.traceback)
-
-package.loaded["lualine"] = original_lualine
-package.loaded["lazy.status"] = original_lazy_status
-vim.lsp.get_clients = original_get_clients
-
-assert(test_ok, test_result)
+end)
