@@ -113,6 +113,21 @@ local function register_plugin_parsers(parser_names)
   end
 end
 
+local function start_treesitter(buf)
+  local ok, err = pcall(vim.treesitter.start, buf)
+  if ok then
+    vim.b[buf].sandu_treesitter_error = nil
+    return true
+  end
+
+  vim.b[buf].sandu_treesitter_error = tostring(err)
+  vim.notify_once(
+    ("Tree-sitter failed to start for %s: %s"):format(vim.bo[buf].filetype, err),
+    vim.log.levels.WARN
+  )
+  return false
+end
+
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
@@ -144,7 +159,10 @@ return {
       group = vim.api.nvim_create_augroup("sandu-treesitter-highlight", { clear = true }),
       pattern = highlight_filetypes(languages),
       callback = function(ev)
-        vim.treesitter.start(ev.buf)
+        if not start_treesitter(ev.buf) then
+          return
+        end
+
         if vim.bo[ev.buf].buftype == "" then
           vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end

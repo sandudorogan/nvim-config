@@ -12,6 +12,27 @@ return {
     local actions = require("telescope.actions")
     local transform_mod = require("telescope.actions.mt").transform_mod
 
+    -- Telescope's ts_highlighter still depends on nvim-treesitter master APIs;
+    -- reimplemented on top of vim.treesitter for the main branch. Remove once
+    -- telescope supports nvim-treesitter main upstream.
+    local previewer_utils = require("telescope.previewers.utils")
+    previewer_utils.ts_highlighter = function(bufnr, ft)
+      local lang = vim.treesitter.language.get_lang(ft)
+      if not lang then
+        return false
+      end
+      local ok = pcall(vim.treesitter.language.add, lang)
+      if not ok then
+        return false
+      end
+      local has_query = pcall(vim.treesitter.query.get, lang, "highlights")
+      if not has_query then
+        return false
+      end
+      local started = pcall(vim.treesitter.start, bufnr, lang)
+      return started
+    end
+
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.sources.telescope")
 
